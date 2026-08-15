@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Teman Tes Kesehatan - Camaba UNNES</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- HEADER: Judul Full Lebar, Tombol Tab di Bawah -->
+    <header class="bg-gradient-to-r from-blue-900 to-indigo-950 text-white shadow-lg sticky top-0 z-50 border-b-4 border-amber-500">
+        <!-- Baris 1: Logo & Judul Full -->
+        <div class="max-w-6xl mx-auto px-4 py-3 sm:py-4">
+            <div class="flex items-center justify-center space-x-3 sm:space-x-4">
+                <div class="bg-amber-500 text-blue-950 p-2.5 sm:p-3 rounded-xl shadow-md font-bold flex-shrink-0">
+                    <i class="fa-solid fa-graduation-cap text-xl sm:text-2xl"></i>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight flex items-center justify-center gap-2 flex-wrap">
+                        <span>TemanSe-Sehat UNNES</span>
+                        <span class="bg-amber-400 text-blue-950 text-[10px] sm:text-xs px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full font-extrabold uppercase">Camaba 2026</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Baris 2: Tombol Tab (di bawah header) -->
+        <div class="bg-blue-950/30 border-t border-blue-800/30">
+            <div class="max-w-6xl mx-auto px-4 py-2 sm:py-2.5 flex justify-center gap-2 sm:gap-3">
+                <button onclick="switchTab('daftar')" id="btn-tab-daftar" class="tab-btn px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all bg-amber-500 text-blue-950 shadow-lg hover:shadow-xl hover:scale-105">
+                    <i class="fa-solid fa-user-plus mr-2"></i> Isi Data Poling
+                </button>
+                <button onclick="switchTab('pantau')" id="btn-tab-pantau" class="tab-btn px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all bg-white/10 text-white hover:bg-white/20 hover:scale-105">
+                    <i class="fa-solid fa-users mr-2"></i> Cari Teman
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-6">
+        
+        <!-- TAB 1: FORM REGISTER POLING -->
+        <div id="tab-daftar" class="block max-w-3xl mx-auto">
+            
+            <!-- WELCOME BANNER HANYA DI TAB ISI DATA -->
+            <div class="bg-gradient-to-br from-blue-50 to-indigo-100 border-l-4 border-blue-700 p-4 sm:p-5 rounded-r-2xl mb-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex items-start space-x-3.5">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg mt-1 hidden sm:block">
+                        <i class="fa-solid fa-bullhorn text-sm"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-blue-950 text-sm sm:text-base">Cari Teman Seperjuangan Tes Kesehatan UNNES!</h3>
+                        <p class="text-xs sm:text-sm text-blue-800 mt-0.5 leading-relaxed">
+                            Masukkan jadwal tes kesehatanmu mulai tanggal <strong>1 s.d 10 Agustus 2026</strong>. Saling sapa, koordinasi berangkat bareng, atau buat grup komunikasi agar tidak sendirian saat di lokasi tes kesehatan UNNES!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-6 md:p-8">
+                <div class="border-b border-slate-100 pb-3 sm:pb-4 mb-4 sm:mb-6">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-900 flex items-center">
+                        <i class="fa-solid fa-file-signature text-amber-500 mr-2"></i> Form Jadwal Tes Kesehatan
+                    </h2>
+                    <p class="text-xs text-slate-500">Silakan isi data diri dan jadwal tes kesehatan Anda untuk dipoling.</p>
+                </div>
+
+                <form id="formPoling" onsubmit="submitForm(event)" class="space-y-4 sm:space-y-5">
+                    <!-- Nama Lengkap -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="nama">Nama Lengkap</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </span>
+                            <input type="text" id="nama" required placeholder="Masukkan nama lengkap Anda" 
+                                class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <!-- Fakultas & Prodi (Dinamis UNNES) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="fakultas">Fakultas</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                    <i class="fa-solid fa-school"></i>
+                                </span>
+                                <select id="fakultas" required onchange="updateProdiDropdown()"
+                                    class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm appearance-none cursor-pointer">
+                                    <option value="" disabled selected>Pilih Fakultas</option>
+                                    <option value="FIPP">FIPP (Ilmu Pendidikan & Psikologi)</option>
+                                    <option value="FBS">FBS (Bahasa dan Seni)</option>
+                                    <option value="FISIP">FISIP (Ilmu Sosial & Ilmu Politik)</option>
+                                    <option value="FMIPA">FMIPA (Matematika & IPA)</option>
+                                    <option value="FT">FT (Teknik)</option>
+                                    <option value="FIK">FIK (Ilmu Keolahragaan)</option>
+                                    <option value="FEB">FEB (Ekonomika dan Bisnis)</option>
+                                    <option value="FH">FH (Hukum)</option>
+                                    <option value="FK">FK (Kedokteran)</option>
+                                    <option value="Pascasarjana">Sekolah Pascasarjana</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="prodi">Program Studi (Prodi)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                    <i class="fa-solid fa-book-bookmark"></i>
+                                </span>
+                                <select id="prodi" required disabled
+                                    class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm appearance-none cursor-pointer disabled:opacity-60">
+                                    <option value="" disabled selected>Pilih Fakultas Terlebih Dahulu</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tanggal & Sesi -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="tanggal">Tanggal Tes (1-10 Agustus 2026)</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                    <i class="fa-solid fa-calendar-day"></i>
+                                </span>
+                                <select id="tanggal" required onchange="generateSessionCodePreview()"
+                                    class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm appearance-none cursor-pointer">
+                                    <option value="" disabled selected>Pilih Tanggal</option>
+                                    <option value="2026-08-01">1 Agustus 2026</option>
+                                    <option value="2026-08-02">2 Agustus 2026</option>
+                                    <option value="2026-08-03">3 Agustus 2026</option>
+                                    <option value="2026-08-04">4 Agustus 2026</option>
+                                    <option value="2026-08-05">5 Agustus 2026</option>
+                                    <option value="2026-08-06">6 Agustus 2026</option>
+                                    <option value="2026-08-07">7 Agustus 2026</option>
+                                    <option value="2026-08-08">8 Agustus 2026</option>
+                                    <option value="2026-08-09">9 Agustus 2026</option>
+                                    <option value="2026-08-10">10 Agustus 2026</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="sesi">Sesi Tes Kesehatan</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                    <i class="fa-solid fa-clock"></i>
+                                </span>
+                                <select id="sesi" required onchange="generateSessionCodePreview()"
+                                    class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm appearance-none cursor-pointer">
+                                    <option value="" disabled selected>Pilih Sesi</option>
+                                    <option value="Sesi 1">Sesi 1 (08.00 - 10.00 WIB)</option>
+                                    <option value="Sesi 2">Sesi 2 (10.00 - 11.30 WIB)</option>
+                                    <option value="Sesi 3">Sesi 3 (13.00 - 15.00 WIB)</option>
+                                    <option value="Sesi 4">Sesi 4 (15.00 - 16.30 WIB)</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                            <p id="session-code-preview" class="text-[11px] text-blue-600 font-bold mt-1.5 hidden"></p>
+                        </div>
+                    </div>
+
+                    <!-- Kontak Medsos/Chat -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="jenis-kontak">Tipe Kontak</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                    <i class="fa-solid fa-address-card"></i>
+                                </span>
+                                <select id="jenis-kontak" required onchange="updateContactPlaceholder()"
+                                    class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm appearance-none cursor-pointer">
+                                    <option value="WhatsApp">WhatsApp</option>
+                                    <option value="Telegram">Telegram</option>
+                                    <option value="Instagram">Instagram</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2" for="kontak" id="label-kontak">Nomor WhatsApp</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400" id="icon-kontak">
+                                    <i class="fa-brands fa-whatsapp text-lg text-emerald-500"></i>
+                                </span>
+                                <input type="text" id="kontak" required placeholder="Contoh: 081234567890" 
+                                    class="w-full pl-10 pr-4 py-2.5 sm:py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all text-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Notif -->
+                    <div id="form-message" class="hidden p-4 rounded-xl text-sm font-semibold"></div>
+
+                    <!-- Submit Button -->
+                    <div class="pt-2">
+                        <button type="submit" id="btn-submit"
+                            class="w-full bg-gradient-to-r from-blue-900 to-indigo-950 hover:from-blue-950 hover:to-slate-900 text-white font-bold py-3 sm:py-3.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all flex justify-center items-center space-x-2 text-sm sm:text-base">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Kirim & Gabung Poling</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB 2: DIREKTORI PENCARIAN TEMAN -->
+        <div id="tab-pantau" class="hidden">
+
+            <!-- Filter & Search Panel -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-4 sm:p-5 mb-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4">
+                    <h2 class="text-xs sm:text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center">
+                        <i class="fa-solid fa-sliders text-amber-500 mr-2"></i> Penyaringan Pencarian Teman
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+                    <!-- Search Input dengan Tombol X -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Nama atau Prodi</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="filter-search" oninput="applyFilters()" placeholder="Cari..." 
+                                class="w-full pl-9 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all">
+                            <!-- TOMBOL X UNTUK MENGHAPUS TEKS PENCARIAN -->
+                            <button onclick="clearSearch()" id="clear-search-btn" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600 hidden">
+                                <i class="fa-solid fa-xmark text-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Fakultas Filter -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Fakultas</label>
+                        <select id="filter-fakultas" onchange="applyFilters()" 
+                            class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all appearance-none cursor-pointer">
+                            <option value="">Semua</option>
+                            <option value="FIPP">FIPP</option>
+                            <option value="FBS">FBS</option>
+                            <option value="FISIP">FISIP</option>
+                            <option value="FMIPA">FMIPA</option>
+                            <option value="FT">FT</option>
+                            <option value="FIK">FIK</option>
+                            <option value="FEB">FEB</option>
+                            <option value="FH">FH</option>
+                            <option value="FK">FK</option>
+                            <option value="Pascasarjana">Pascasarjana</option>
+                        </select>
+                    </div>
+
+                    <!-- Tanggal Filter -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Tanggal Tes</label>
+                        <select id="filter-tanggal" onchange="applyFilters()" 
+                            class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all appearance-none cursor-pointer">
+                            <option value="">Semua</option>
+                            <option value="2026-08-01">1 Agt</option>
+                            <option value="2026-08-02">2 Agt</option>
+                            <option value="2026-08-03">3 Agt</option>
+                            <option value="2026-08-04">4 Agt</option>
+                            <option value="2026-08-05">5 Agt</option>
+                            <option value="2026-08-06">6 Agt</option>
+                            <option value="2026-08-07">7 Agt</option>
+                            <option value="2026-08-08">8 Agt</option>
+                            <option value="2026-08-09">9 Agt</option>
+                            <option value="2026-08-10">10 Agt</option>
+                        </select>
+                    </div>
+
+                    <!-- Sesi Filter -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 mb-1.5">Sesi Tes</label>
+                        <select id="filter-sesi" onchange="applyFilters()" 
+                            class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:bg-white transition-all appearance-none cursor-pointer">
+                            <option value="">Semua</option>
+                            <option value="Sesi 1">Sesi 1</option>
+                            <option value="Sesi 2">Sesi 2</option>
+                            <option value="Sesi 3">Sesi 3</option>
+                            <option value="Sesi 4">Sesi 4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 🔥 TOMBOL RESET FILTER & REFRESH DI BAWAH FILTER -->
+                <div class="flex flex-wrap justify-center gap-3 mt-4 pt-3 border-t border-slate-100">
+                    <button onclick="resetFilters()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Filter
+                    </button>
+                    <button onclick="fetchData()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2 rounded-xl text-sm font-bold flex items-center gap-2 transition-all">
+                        <i class="fa-solid fa-arrows-rotate" id="refresh-icon"></i> Refresh Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div id="stats-container" class="mb-6 text-center">
+                <!-- Diisi otomatis melalui JS -->
+            </div>
+
+            <!-- Directory Card Grid -->
+            <div>
+                <!-- Loading State -->
+                <div id="loading-state" class="py-16 text-center">
+                    <div class="flex flex-col items-center justify-center space-y-3">
+                        <div class="w-12 h-12 border-4 border-blue-900 border-t-amber-500 rounded-full animate-spin"></div>
+                        <span class="text-slate-500 font-medium text-sm">Menghubungkan ke database...</span>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden py-16 text-center bg-white rounded-2xl border border-slate-100 shadow-sm">
+                    <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                        <i class="fa-solid fa-users-slash text-2xl"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base" id="empty-title">Tidak ada teman ditemukan</h3>
+                    <p class="text-sm text-slate-500 mt-1" id="empty-desc">Sesuaikan kembali kata kunci pencarian atau filter tanggal di atas.</p>
+                </div>
+
+                <!-- Card Grid Container -->
+                <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                    <!-- Kartu data camaba di-render di sini secara dinamis -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-sm py-6 sm:py-8 mt-auto border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6 text-center sm:text-left">
+            <div>
+                <p class="font-bold text-slate-200 text-base sm:text-lg">TemanSe-Sehat UNNES &copy; 2026</p>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Sistem informasi koordinasi dan silaturahmi Calon Mahasiswa Baru UNNES.</p>
+            </div>
+            <div class="flex flex-col items-center sm:items-end gap-2 max-w-sm sm:max-w-md">
+                <!-- Peringatan disclaimer diperbesar -->
+                <div class="text-xs sm:text-sm text-amber-400/80 bg-amber-950/30 px-3 py-1.5 rounded-lg border border-amber-800/30">
+                    ⚠️ Website ini adalah <strong>inisiatif calon mahasiswa baru</strong>, bukan website resmi UNNES. Data hanya digunakan untuk koordinasi antar calon mahasiswa baru.
+                </div>
+                <!-- Tombol Kritik & Saran diperbesar -->
+                <a href="mailto:kamalfikar16@gmail.com?subject=Kritik%20%26%20Saran%20TemanSe-Sehat%20UNNES" 
+                   target="_blank" 
+                   class="text-sm sm:text-base bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 hover:text-amber-300 px-5 py-2 rounded-xl font-semibold transition-all flex items-center gap-2 border border-amber-500/30 hover:border-amber-500/50">
+                    <i class="fa-solid fa-envelope text-base"></i> Kirim Kritik & Saran
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Logika Utama -->
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbz9TPf6VGmOJi0hM9T1SML_gG1yzCzuh00xnQV7Pateg7BuQt5ovvcDZwGMOdNgdwB2zw/exec"; 
+
+        let camabaList = [];
+
+        const unnesData = {
+            "FIPP": [
+                "Bimbingan dan Konseling",
+                "Teknologi Pendidikan",
+                "Pendidikan Non Formal",
+                "Psikologi",
+                "Pendidikan Guru Sekolah Dasar (PGSD)",
+                "Pendidikan Guru PAUD (PGPAUD)"
+            ],
+            "FBS": [
+                "Pendidikan Bahasa dan Sastra Indonesia",
+                "Sastra Indonesia",
+                "Pendidikan Bahasa Inggris",
+                "Sastra Inggris",
+                "Pendidikan Bahasa Prancis",
+                "Sastra Prancis",
+                "Pendidikan Bahasa Jawa",
+                "Sastra Jawa",
+                "Pendidikan Seni Rupa",
+                "Seni Rupa (Konsentrasi DKV/Lukis/Patung/Grafis)",
+                "Desain Komunikasi Visual (DKV)",
+                "Pendidikan Bahasa Jepang",
+                "Pendidikan Bahasa Arab",
+                "Pendidikan Bahasa Mandarin",
+                "Pendidikan Seni Drama, Tari, dan Musik (Seni Musik)",
+                "Pendidikan Seni Drama, Tari, dan Musik (Seni Tari)"
+            ],
+            "FISIP": [
+                "Pendidikan Sosiologi dan Antropologi",
+                "Pendidikan Pancasila dan Kewarganegaraan",
+                "Pendidikan Sejarah",
+                "Ilmu Sejarah",
+                "Ilmu Politik",
+                "Geografi",
+                "Pendidikan Geografi",
+                "Pendidikan Ilmu Pengetahuan Sosial",
+                "Ilmu Komunikasi"
+            ],
+            "FMIPA": [
+                "Matematika",
+                "Pendidikan Matematika",
+                "Fisika",
+                "Pendidikan Fisika",
+                "Kimia",
+                "Pendidikan Kimia",
+                "Biologi",
+                "Pendidikan Biologi",
+                "Pendidikan IPA",
+                "Teknik Informatika",
+                "Sistem Informasi",
+                "Ilmu Komputer",
+                "Ilmu Lingkungan",
+                "Statistika Terapan dan Komputasi"
+            ],
+            "FT": [
+                "Pendidikan Teknik Bangunan",
+                "Teknik Sipil",
+                "Arsitektur",
+                "Pendidikan Teknik Mesin",
+                "Teknik Mesin",
+                "Pendidikan Teknik Otomotif",
+                "Teknik Otomotif",
+                "Pendidikan Teknik Elektro",
+                "Teknik Elektro",
+                "Teknik Komputer",
+                "Pendidikan Teknik Informatika dan Komputer",
+                "Pendidikan Kesejahteraan Keluarga",
+                "Pendidikan Tata Busana",
+                "Pendidikan Tata Boga",
+                "Pendidikan Tata Kecantikan",
+                "Teknik Kimia"
+            ],
+            "FIK": [
+                "Ilmu Keolahragaan",
+                "Pendidikan Kesehatan Jasmani dan Rekreasi (PJKR)",
+                "Pendidikan Kepelatihan Olahraga",
+                "Pendidikan Jasmani Sekolah Dasar"
+            ],
+            "FEB": [
+                "Manajemen",
+                "Akuntansi",
+                "Ekonomi Pembangunan",
+                "Pendidikan Ekonomi (Pendidikan Akuntansi)",
+                "Pendidikan Ekonomi (Pendidikan Administrasi Perkantoran)",
+                "Pendidikan Ekonomi (Pendidikan Koperasi)",
+                "Ekonomi dan Keuangan Islam"
+            ],
+            "FH": [
+                "Ilmu Hukum"
+            ],
+            "FK": [
+                "Kedokteran",
+                "Gizi",
+                "Farmasi",
+                "Kesehatan Masyarakat",
+                "Keperawatan",
+                "Kedokteran Hewan"
+            ],
+            "Pascasarjana": [
+                "Pendidikan Dasar",
+                "Bimbingan dan Konseling",
+                "Manajemen Pendidikan",
+                "Penelitian dan Evaluasi Pendidikan",
+                "Pendidikan Profesi Guru (PPG)"
+            ]
+        };
+
+        function updateProdiDropdown() {
+            const fakultasSelect = document.getElementById('fakultas');
+            const prodiSelect = document.getElementById('prodi');
+            const selectedFakultas = fakultasSelect.value;
+
+            prodiSelect.innerHTML = '<option value="" disabled selected>Pilih Program Studi</option>';
+
+            if (selectedFakultas && unnesData[selectedFakultas]) {
+                prodiSelect.disabled = false;
+                unnesData[selectedFakultas].forEach(prodi => {
+                    const option = document.createElement('option');
+                    option.value = prodi;
+                    option.textContent = prodi;
+                    prodiSelect.appendChild(option);
+                });
+            } else {
+                prodiSelect.disabled = true;
+                prodiSelect.innerHTML = '<option value="" disabled selected>Pilih Fakultas Terlebih Dahulu</option>';
+            }
+        }
+
+        function generateSessionCodePreview() {
+            const tanggalVal = document.getElementById('tanggal').value;
+            const sesiVal = document.getElementById('sesi').value;
+            const previewEl = document.getElementById('session-code-preview');
+
+            if (tanggalVal && sesiVal) {
+                const dateObj = new Date(tanggalVal);
+                const day = dateObj.getDate(); 
+                const sessionNum = sesiVal.replace(/[^0-9]/g, "");
+
+                if (day && sessionNum) {
+                    previewEl.textContent = `⚡ Format Kode Sesi Anda: ${day}.${sessionNum}`;
+                    previewEl.classList.remove('hidden');
+                    return `${day}.${sessionNum}`;
+                }
+            }
+            previewEl.classList.add('hidden');
+            return "";
+        }
+
+        function updateContactPlaceholder() {
+            const type = document.getElementById('jenis-kontak').value;
+            const label = document.getElementById('label-kontak');
+            const input = document.getElementById('kontak');
+            const iconContainer = document.getElementById('icon-kontak');
+
+            if (type === 'WhatsApp') {
+                label.textContent = "Nomor WhatsApp";
+                input.placeholder = "Contoh: 081234567890";
+                iconContainer.innerHTML = '<i class="fa-brands fa-whatsapp text-lg text-emerald-500"></i>';
+            } else if (type === 'Telegram') {
+                label.textContent = "Username Telegram (Gunakan @)";
+                input.placeholder = "Contoh: @budi_unnes";
+                iconContainer.innerHTML = '<i class="fa-brands fa-telegram text-lg text-sky-500"></i>';
+            } else if (type === 'Instagram') {
+                label.textContent = "Username Instagram (Gunakan @)";
+                input.placeholder = "Contoh: @budisatoso_";
+                iconContainer.innerHTML = '<i class="fa-brands fa-instagram text-lg text-pink-500"></i>';
+            }
+        }
+
+        function switchTab(tabName) {
+            const tabDaftar = document.getElementById('tab-daftar');
+            const tabPantau = document.getElementById('tab-pantau');
+            const btnDaftar = document.getElementById('btn-tab-daftar');
+            const btnPantau = document.getElementById('btn-tab-pantau');
+
+            if (tabName === 'daftar') {
+                tabDaftar.classList.remove('hidden');
+                tabPantau.classList.add('hidden');
+                btnDaftar.className = "tab-btn px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all bg-amber-500 text-blue-950 shadow-lg hover:shadow-xl hover:scale-105";
+                btnPantau.className = "tab-btn px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all bg-white/10 text-white hover:bg-white/20 hover:scale-105";
+            } else {
+                tabDaftar.classList.add('hidden');
+                tabPantau.classList.remove('hidden');
+                btnPantau.className = "tab-btn px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all bg-amber-500 text-blue-950 shadow-lg hover:shadow-xl hover:scale-105";
+                btnDaftar.className = "tab-btn px-5 sm:px-8 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-bold transition-all bg-white/10 text-white hover:bg-white/20 hover:scale-105";
+                fetchData();
+            }
+        }
+
+        function formatDateIndo(dateString) {
+            if (!dateString) return "-";
+            
+            if (typeof dateString === 'string' && dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                const parts = dateString.split('-');
+                const date = new Date(parts[0], parts[1] - 1, parts[2]);
+                return date.toLocaleDateString('id-ID', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+            
+            const date = new Date(dateString);
+            if (isNaN(date.getTime())) return dateString;
+            return date.toLocaleDateString('id-ID', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+
+        function submitForm(e) {
+            e.preventDefault();
+
+            const nama = document.getElementById('nama').value.trim();
+            const fakultas = document.getElementById('fakultas').value;
+            const prodi = document.getElementById('prodi').value;
+            const tanggal = document.getElementById('tanggal').value;
+            const sesi = document.getElementById('sesi').value;
+            const jenisKontak = document.getElementById('jenis-kontak').value;
+            const kontak = document.getElementById('kontak').value.trim();
+
+            const btnSubmit = document.getElementById('btn-submit');
+            const messageBox = document.getElementById('form-message');
+
+            function normalizeString(str) {
+                return str.toLowerCase().trim().replace(/\s+/g, ' ');
+            }
+
+            function normalizeKontak(str) {
+                return str.toLowerCase().trim().replace(/[\s@]/g, '');
+            }
+
+            // CEK DUPLIKAT - Nama + Kontak
+            const isDuplicate = camabaList.some(item => {
+                const itemNama = normalizeString(item.nama || '');
+                const itemKontak = normalizeKontak(item.kontak || '');
+                const formNama = normalizeString(nama);
+                const formKontak = normalizeKontak(kontak);
+                return itemNama === formNama && itemKontak === formKontak;
+            });
+
+            if (isDuplicate) {
+                messageBox.className = "p-4 rounded-xl text-sm font-semibold bg-amber-100 text-amber-800 border border-amber-200 block";
+                messageBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i>⚠️ Data dengan nama dan kontak ini sudah terdaftar! Tidak boleh isi dua kali.';
+                return;
+            }
+
+            // CEK DUPLIKAT - Nama + Tanggal + Sesi
+            const isDuplicateJadwal = camabaList.some(item => {
+                const itemNama = normalizeString(item.nama || '');
+                const itemTanggal = (item.tanggal || '').substring(0, 10);
+                const itemSesi = normalizeString(item.sesi || '');
+                const formNama = normalizeString(nama);
+                const formTanggal = tanggal.substring(0, 10);
+                const formSesi = normalizeString(sesi);
+                return itemNama === formNama && itemTanggal === formTanggal && itemSesi === formSesi;
+            });
+
+            if (isDuplicateJadwal) {
+                messageBox.className = "p-4 rounded-xl text-sm font-semibold bg-amber-100 text-amber-800 border border-amber-200 block";
+                messageBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation mr-2"></i>⚠️ Anda sudah mendaftar untuk jadwal ini! Tidak boleh isi dua kali.';
+                return;
+            }
+
+            messageBox.classList.add('hidden');
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner animate-spin mr-2"></i><span>Mengirim Data...</span>';
+
+            const generatedSessionCode = generateSessionCodePreview();
+
+            const payload = {
+                nama: nama,
+                fakultas: fakultas,
+                prodi: prodi,
+                tanggal: tanggal,
+                sesi: sesi,
+                kodeSesi: generatedSessionCode,
+                jenisKontak: jenisKontak,
+                kontak: kontak
+            };
+
+            fetch(API_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>Kirim & Gabung Poling</span>';
+                
+                messageBox.className = "p-4 rounded-xl text-sm font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 block";
+                messageBox.innerHTML = '<i class="fa-solid fa-check-circle mr-2"></i>Berhasil! Data Anda disimpan. Mengalihkan ke tab direktori teman...';
+                
+                document.getElementById('formPoling').reset();
+                document.getElementById('prodi').disabled = true;
+                document.getElementById('session-code-preview').classList.add('hidden');
+
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                    fetchData();
+                    switchTab('pantau');
+                }, 2000);
+            })
+            .catch(err => {
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i><span>Kirim & Gabung Poling</span>';
+                messageBox.className = "p-4 rounded-xl text-sm font-semibold bg-red-100 text-red-800 border border-red-200 block";
+                messageBox.innerHTML = '<i class="fa-solid fa-exclamation-triangle mr-2"></i>Gagal mengirim data. Silakan coba sesaat lagi.';
+                console.error(err);
+            });
+        }
+
+        function fetchData() {
+            // 🔥 RESET FILTER KE DEFAULT SAAT REFRESH
+            document.getElementById('filter-search').value = '';
+            document.getElementById('filter-fakultas').value = '';
+            document.getElementById('filter-tanggal').value = '';
+            document.getElementById('filter-sesi').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+
+            const refreshIcon = document.getElementById('refresh-icon');
+            if (refreshIcon) refreshIcon.classList.add('animate-spin');
+
+            const loadingState = document.getElementById('loading-state');
+            const emptyState = document.getElementById('empty-state');
+            const cardsContainer = document.getElementById('cards-container');
+
+            loadingState.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+            cardsContainer.innerHTML = '';
+
+            const url = API_URL + "?action=read";
+
+            fetch(url)
+                .then(response => {
+                    return response.text();
+                })
+                .then(text => {
+                    let cleanText = text.trim();
+                    if (cleanText.charCodeAt(0) === 0xFEFF) {
+                        cleanText = cleanText.slice(1);
+                    }
+                    
+                    try {
+                        const json = JSON.parse(cleanText);
+                        
+                        if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+                        loadingState.classList.add('hidden');
+                        
+                        if (json.status === "success") {
+                            camabaList = json.data || [];
+                            
+                            if (camabaList.length === 0) {
+                                emptyState.classList.remove('hidden');
+                                document.getElementById('empty-title').textContent = 'Belum Ada Data';
+                                document.getElementById('empty-desc').textContent = 'Isi data di tab "Isi Data Poling" terlebih dahulu!';
+                            } else {
+                                emptyState.classList.add('hidden');
+                                renderCards(camabaList);
+                                renderStats(camabaList);
+                            }
+                        } else {
+                            emptyState.classList.remove('hidden');
+                            document.getElementById('empty-title').textContent = 'Error Server';
+                            document.getElementById('empty-desc').textContent = json.message || 'Unknown error';
+                        }
+                    } catch (parseError) {
+                        console.error("❌ Parse error:", parseError);
+                        
+                        if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+                        loadingState.classList.add('hidden');
+                        emptyState.classList.remove('hidden');
+                        document.getElementById('empty-title').textContent = 'Error Parse Data';
+                        document.getElementById('empty-desc').textContent = 'Coba akses URL langsung di browser untuk cek response.';
+                    }
+                })
+                .catch(err => {
+                    console.error("❌ Fetch error:", err);
+                    if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+                    loadingState.classList.add('hidden');
+                    emptyState.classList.remove('hidden');
+                    document.getElementById('empty-title').textContent = 'Koneksi Gagal';
+                    document.getElementById('empty-desc').textContent = err.message || 'Cek koneksi internet.';
+                });
+        }
+
+        function renderCards(dataList) {
+            const cardsContainer = document.getElementById('cards-container');
+            const emptyState = document.getElementById('empty-state');
+
+            cardsContainer.innerHTML = '';
+
+            if (!dataList || dataList.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.getElementById('empty-title').textContent = 'Tidak Ada Teman Ditemukan';
+                document.getElementById('empty-desc').textContent = 'Sesuaikan filter atau isi data di tab "Isi Data Poling".';
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            // BALIK URUTAN: data terbaru di atas
+            const reversedData = [...dataList].reverse();
+
+            reversedData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl border border-slate-100 p-4 sm:p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden";
+                
+                const accentBorder = document.createElement('div');
+                accentBorder.className = "absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-900 to-amber-500";
+                card.appendChild(accentBorder);
+
+                let contactBtnHtml = '';
+                const rawContact = item.kontak ? String(item.kontak).trim() : '';
+                const cleanContact = rawContact.replace(/^@/, "");
+                const jenisKontak = item.jenisKontak || 'WhatsApp';
+
+                let jamSesi = "";
+                if (item.sesi && item.sesi.includes("1")) jamSesi = "08.00 - 10.00";
+                else if (item.sesi && item.sesi.includes("2")) jamSesi = "10.00 - 11.30";
+                else if (item.sesi && item.sesi.includes("3")) jamSesi = "13.00 - 15.00";
+                else if (item.sesi && item.sesi.includes("4")) jamSesi = "15.00 - 16.30";
+
+                const kodeTampilanSesi = item.kodeSesi || "?";
+
+                if (jenisKontak === 'Telegram') {
+                    const teleUsername = cleanContact || rawContact;
+                    contactBtnHtml = `
+                        <a href="https://t.me/${teleUsername}" target="_blank" class="mt-4 bg-sky-100 hover:bg-sky-200 text-sky-800 py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition-all">
+                            <i class="fa-brands fa-telegram text-base"></i> <span>Hubungi via Telegram</span>
+                        </a>
+                    `;
+                } else if (jenisKontak === 'Instagram') {
+                    const igUsername = cleanContact || rawContact;
+                    contactBtnHtml = `
+                        <a href="https://instagram.com/${igUsername}" target="_blank" class="mt-4 bg-pink-100 hover:bg-pink-200 text-pink-800 py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center space-x-1.5 transition-all">
+                            <i class="fa-brands fa-instagram text-base"></i> <span>Hubungi via Instagram</span>
+                        </a>
+                    `;
+                } else {
+                    let waNum = String(rawContact).replace(/[^0-9]/g, "");
+                    if (waNum.startsWith("0")) waNum = "62" + waNum.slice(1);
+                    const waText = encodeURIComponent(`Halo ${item.nama}, aku sesama camaba UNNES. Aku lihat jadwal tes kesehatanmu di poling tanggal ${formatDateIndo(item.tanggal)} - Kode Sesi ${kodeTampilanSesi} (${jamSesi} WIB). Mau koordinasi atau berangkat bareng?`);
+                    
+                    contactBtnHtml = `
+                        <a href="https://wa.me/${waNum}?text=${waText}" target="_blank" class="mt-4 bg-emerald-500 hover:bg-emerald-600 text-white py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 transition-all shadow-sm">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> <span>Hubungi via WhatsApp</span>
+                        </a>
+                    `;
+                }
+
+                let sessionBadgeClass = "bg-amber-100 text-amber-800 border-amber-200";
+                if (item.sesi && item.sesi.includes("2")) sessionBadgeClass = "bg-sky-100 text-sky-800 border-sky-200";
+                if (item.sesi && item.sesi.includes("3")) sessionBadgeClass = "bg-purple-100 text-purple-800 border-purple-200";
+                if (item.sesi && item.sesi.includes("4")) sessionBadgeClass = "bg-teal-100 text-teal-800 border-teal-200";
+
+                card.innerHTML += `
+                    <div>
+                        <div class="flex items-start justify-between gap-2 mb-3">
+                            <div class="max-w-[70%]">
+                                <h3 class="font-bold text-slate-900 text-sm leading-tight">${item.nama || 'Tidak Diketahui'}</h3>
+                                <p class="text-xs text-blue-900 font-semibold mt-0.5 truncate">${item.prodi || '-'}</p>
+                                <span class="inline-block bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded-md font-bold mt-1 uppercase">${item.fakultas || '-'}</span>
+                            </div>
+                            <div class="text-right flex-shrink-0 flex flex-col items-end gap-1">
+                                <span class="inline-flex items-center px-2 py-0.5 border rounded-lg text-[10px] font-extrabold ${sessionBadgeClass}">
+                                    Kode: ${kodeTampilanSesi}
+                                </span>
+                                <span class="text-[9px] text-slate-400 font-medium">${item.sesi ? `Sesi ${item.sesi.replace(/[^0-9]/g, "")}` : '-'}</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-xl p-3 space-y-1.5 text-xs border border-slate-100 mt-2">
+                            <div class="flex items-center text-slate-600">
+                                <i class="fa-regular fa-calendar-days text-slate-400 mr-2 text-sm w-4 text-center"></i>
+                                <span class="font-semibold text-slate-700 text-xs sm:text-sm">${formatDateIndo(item.tanggal)}</span>
+                            </div>
+                            <div class="flex items-center text-slate-600">
+                                <i class="fa-regular fa-clock text-slate-400 mr-2 text-sm w-4 text-center"></i>
+                                <span class="font-medium text-slate-600 text-xs sm:text-sm">${jamSesi || 'Waktu tidak tersedia'} WIB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    ${contactBtnHtml}
+                `;
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        function renderStats(dataList) {
+            const statsContainer = document.getElementById('stats-container');
+            const total = dataList.length;
+
+            // HAPUS GRID - set display block agar full width
+            statsContainer.style.display = 'block';
+            statsContainer.className = 'mb-6 text-center';
+
+            // Hitung jumlah per tanggal (1-10 Agustus 2026)
+            const dateCounts = {};
+            const dateLabels = {};
+            
+            for (let d = 1; d <= 10; d++) {
+                const dateStr = '2026-08-' + String(d).padStart(2, '0');
+                dateCounts[dateStr] = 0;
+                dateLabels[dateStr] = d + ' Agt';
+            }
+
+            dataList.forEach(item => {
+                if (item.tanggal) {
+                    const tanggal = item.tanggal.substring(0, 10);
+                    if (dateCounts.hasOwnProperty(tanggal)) {
+                        dateCounts[tanggal]++;
+                    }
+                }
+            });
+
+            let statsHtml = `
+                <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-center items-center min-w-[90px] flex-shrink-0">
+                    <div class="bg-blue-100 text-blue-900 p-2 rounded-xl mb-1 text-sm">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Total</div>
+                    <div class="text-base font-extrabold text-slate-900 mt-0.5">${total}</div>
+                </div>
+            `;
+
+            const dateKeys = Object.keys(dateCounts).sort();
+            dateKeys.forEach(dateStr => {
+                const count = dateCounts[dateStr];
+                const label = dateLabels[dateStr];
+                
+                let bgColor = 'bg-slate-100';
+                let textColor = 'text-slate-700';
+                let iconColor = 'text-slate-500';
+                let icon = 'fa-regular fa-calendar';
+                
+                if (count > 0) {
+                    bgColor = 'bg-emerald-100';
+                    textColor = 'text-emerald-800';
+                    iconColor = 'text-emerald-600';
+                    icon = 'fa-solid fa-calendar-check';
+                }
+                
+                statsHtml += `
+                    <div class="bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-center items-center min-w-[80px] flex-shrink-0">
+                        <div class="${bgColor} ${textColor} p-2 rounded-xl mb-1 text-sm">
+                            <i class="${icon} ${iconColor}"></i>
+                        </div>
+                        <div class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">${label}</div>
+                        <div class="text-base font-extrabold ${textColor} mt-0.5">${count}</div>
+                    </div>
+                `;
+            });
+
+            // Container dengan overflow auto
+            statsContainer.innerHTML = `
+                <div class="w-full overflow-x-auto overflow-y-hidden pb-3">
+                    <div class="flex gap-3" style="width: max-content; min-width: 100%;">
+                        ${statsHtml}
+                    </div>
+                </div>
+                <div class="flex justify-center gap-1 mt-2 sm:hidden">
+                    <span class="text-[10px] text-slate-400 animate-pulse">
+                        <i class="fa-solid fa-chevron-left"></i> Geser <i class="fa-solid fa-chevron-right"></i>
+                    </span>
+                </div>
+            `;
+        }
+
+        function applyFilters() {
+            const fSearch = document.getElementById('filter-search').value.toLowerCase();
+            const fFakultas = document.getElementById('filter-fakultas').value;
+            const fTanggal = document.getElementById('filter-tanggal').value;
+            const fSesi = document.getElementById('filter-sesi').value;
+
+            if (!fSearch && !fFakultas && !fTanggal && !fSesi) {
+                renderCards(camabaList);
+                return;
+            }
+
+            const filteredData = camabaList.filter(item => {
+                const matchSearch = !fSearch || 
+                    (item.nama && item.nama.toLowerCase().includes(fSearch)) || 
+                    (item.prodi && item.prodi.toLowerCase().includes(fSearch)) ||
+                    (item.kodeSesi && item.kodeSesi.includes(fSearch));
+                const matchFakultas = !fFakultas || (item.fakultas === fFakultas);
+                const matchTanggal = !fTanggal || (item.tanggal && item.tanggal.includes(fTanggal));
+                const matchSesi = !fSesi || (item.sesi && item.sesi.includes(fSesi));
+
+                return matchSearch && matchFakultas && matchTanggal && matchSesi;
+            });
+
+            renderCards(filteredData);
+        }
+
+        // FUNGSI RESET FILTER
+        function resetFilters() {
+            document.getElementById('filter-search').value = '';
+            document.getElementById('filter-fakultas').value = '';
+            document.getElementById('filter-tanggal').value = '';
+            document.getElementById('filter-sesi').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            renderCards(camabaList);
+        }
+
+        // FUNGSI CLEAR SEARCH (Tombol X)
+        function clearSearch() {
+            document.getElementById('filter-search').value = '';
+            document.getElementById('clear-search-btn').classList.add('hidden');
+            applyFilters();
+        }
+
+        window.onload = function() {
+            updateContactPlaceholder();
+            
+            // Event listener untuk tombol X pada search
+            const searchInput = document.getElementById('filter-search');
+            const clearBtn = document.getElementById('clear-search-btn');
+            
+            if (searchInput && clearBtn) {
+                searchInput.addEventListener('input', function() {
+                    if (this.value.length > 0) {
+                        clearBtn.classList.remove('hidden');
+                    } else {
+                        clearBtn.classList.add('hidden');
+                    }
+                });
+            }
+        };
+    </script>
+</body>
+</html>
